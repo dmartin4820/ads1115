@@ -12,6 +12,22 @@ A3 = []
 
 arduino = serial.Serial('COM5', 9600)
 
+diff = True
+
+def plot_data_diff(i):
+    data = arduino.readline()
+    data = data.rstrip()
+    data = data.decode('utf-8')
+
+    A0.append(float(data))
+    
+    ax.clear()
+
+    ax.plot(A0)
+
+    plt.plot(A0)
+    plt.ylabel('A0A1 (V)')
+
 
 def plot_data(i):
     data = arduino.readline()
@@ -34,5 +50,8 @@ def plot_data(i):
 
     plt.ylabel('Volts (V)')
 
-ani = animation.FuncAnimation(fig, plot_data, interval=1000)
+if not diff:
+    ani = animation.FuncAnimation(fig, plot_data, interval=1000)
+else:
+    ani = animation.FuncAnimation(fig, plot_data_diff, interval=1000)
 plt.show()
